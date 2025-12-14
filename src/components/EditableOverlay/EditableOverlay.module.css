@@ -1,0 +1,191 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.overlay.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.editableTextItem {
+  position: absolute;
+  background-color: transparent;
+  border: 1px dashed transparent;
+  border-radius: 2px;
+  padding: 0;
+  margin: 0;
+  cursor: text;
+  white-space: nowrap;
+  overflow: visible;
+  line-height: 1.2;
+  transition: all 0.15s ease-in-out;
+  min-height: 1em;
+  min-width: 1em;
+  word-wrap: normal;
+  user-select: text;
+  transform-origin: top left;
+}
+
+.editableTextItem:hover:not(.editing):not(.disabled) {
+  border-color: rgba(59, 130, 246, 0.5);
+  background-color: rgba(59, 130, 246, 0.05);
+  outline: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.editableTextItem:focus:not(.disabled) {
+  outline: none;
+}
+
+.editableTextItem.editing {
+  border: 2px solid #3b82f6;
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transform: scale(1.02);
+  padding: 2px 4px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.editableTextItem.edited {
+  border-color: #f59e0b;
+  background-color: rgba(245, 158, 11, 0.1);
+}
+
+.editableTextItem.edited:hover:not(.editing):not(.disabled) {
+  border-color: #f59e0b;
+  background-color: rgba(245, 158, 11, 0.15);
+  outline-color: rgba(245, 158, 11, 0.3);
+}
+
+.editableTextItem.disabled {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.7;
+  border-color: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Text selection styles */
+.editableTextItem::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+}
+
+.editableTextItem::-moz-selection {
+  background-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Caret styles */
+.editableTextItem:focus {
+  caret-color: #3b82f6;
+}
+
+.editableTextItem.editing:focus {
+  caret-color: #000000;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .editableTextItem {
+    border-width: 2px;
+  }
+
+  .editableTextItem:hover:not(.editing) {
+    border-width: 2px;
+    outline-width: 2px;
+  }
+
+  .editableTextItem.editing {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .editableTextItem {
+    transition: none;
+  }
+
+  .editableTextItem.editing {
+    transform: none;
+  }
+}
+
+/* Touch device support */
+@media (hover: none) and (pointer: coarse) {
+  .editableTextItem {
+    min-height: 2em;
+    min-width: 2em;
+    padding: 4px;
+  }
+
+  .editableTextItem.editing {
+    transform: scale(1.05);
+    min-height: 2.5em;
+  }
+}
+
+/* Debug information (development only) */
+.debugInfo {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.debugInfo div {
+  margin: 0.25rem 0;
+}
+
+/* Screen reader only content */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Print styles */
+@media print {
+  .overlay {
+    display: none !important;
+  }
+
+  .debugInfo {
+    display: none !important;
+  }
+}
+
+/* Small screen adjustments */
+@media (max-width: 768px) {
+  .editableTextItem {
+    min-height: 1.5em;
+    min-width: 1.5em;
+  }
+
+  .editableTextItem.editing {
+    transform: scale(1.01);
+    padding: 3px 5px;
+  }
+}
